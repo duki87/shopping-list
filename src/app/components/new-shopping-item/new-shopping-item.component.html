@@ -1,0 +1,14 @@
+<div class="content-center">
+    <div class="modal-box">
+        <h1 class="title">
+            Create Shopping Item
+        </h1>
+
+        <input #itemTitleInput [(ngModel)]="title" class="input has-background-light is-medium" type="text" placeholder="Enter shopping item title...">
+        <input #itemPriceInput [(ngModel)]="price" class="input has-background-light is-medium" type="number" min="0" style="margin-top: 10px;" placeholder="Enter shopping item price...">
+        <br><br>
+        <div class="buttons is-right">
+          <button class="button is-medium" routerLink="/">Cancel</button>
+          <button class="button is-primary has-text-white is-medium" (click)="createShoppingItem(itemTitleInput.value, itemPriceInput.value)">Create</button>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="content-center">
+    <div class="shop-manager">
+        <div class="sidebar">
+            <h1 class="title has-text-primary">
+                Lists
+            </h1>
+            <div class="list-menu">
+                <a href="" class="list-menu-item" *ngFor="let list of lists" [routerLink]="['/shopping-lists', list._id]" routerLinkActive="is-active">
+                    <p>{{ list.title }}</p>
+                </a>
+            </div>
+
+            <button class="button is-primary has-text-white" routerLink="/new-list">+ Add New List</button>
+        </div>
+        <div class="shop-list has-background-light">
+            <h1 class="title has-text-primary">
+                Shopping Items
+            </h1>
+            <div class="shopping-item" *ngFor="let item of items" (click)="completeItem(item)" [ngClass]="{ 'completed': item.completed }">
+                <p>{{ item.title }}</p>
+            </div>
+
+            <button class="circle-add-button button is-primary" routerLink="./new-shopping-item">
+                <img src="../../../assets/img/plus.svg" alt="">
+            </button>
+        </div>
+    </div>
+</div>
