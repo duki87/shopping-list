@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { WebRequestService } from './web-request-service.service';
-import { List } from '../_models/list';
+import { List } from '../_models/List';
 import { Item } from '../_models/Item';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingItemsServiceService } from 'src/app/_services/shopping-items-service.service';
-import { List } from 'src/app/_models/list';
+import { List } from 'src/app/_models/List';
 import { Router } from '@angular/router';
 
 @Component({
