@@ -27,4 +27,11 @@ export class WebRequestService {
   delete(url: string) {
     return this._http.delete(`${this.ROOT_URL}/${url}`);
   }
+
+  login(userData: object) {
+    return this._http.post(`${this.ROOT_URL}/users/login`, userData, {
+        observe: 'response'
+      });
+      //{ observe: 'response' is added in order to return get full response }
+  }
 }

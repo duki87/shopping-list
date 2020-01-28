@@ -3,7 +3,7 @@
         <h1 class="title has-text-primary">Login</h1>
         <div class="field">
             <p class="control has-icons-left has-icons-right">
-              <input class="input" type="email" placeholder="Email">
+              <input #email class="input" type="email" placeholder="Email" required>
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
@@ -14,7 +14,7 @@
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input class="input" type="password" placeholder="Password">
+              <input #password class="input" type="password" placeholder="Password" required>
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
@@ -22,7 +22,7 @@
           </div>
           <div class="field is-pulled-right">
             <p class="control">
-              <button class="button is-success has-text-white">
+              <button (click)="login(email.value, password.value)" class="button is-success has-text-white">
                 Login
               </button>
             </p>

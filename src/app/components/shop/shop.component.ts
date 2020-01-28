@@ -24,10 +24,16 @@ export class ShopComponent implements OnInit {
           this.listId = params.listId;
           this._shoppingItemsService.getShoppingItems(params.listId)
           .subscribe(
-            items => {
-              this.items = items.data;
+            (items: Item[]) => {
+              if(items.length < 1) {
+                this.items = undefined;
+              } else {
+                this.items = items;
+              }          
             }
           )
+        } else {
+          this.items = undefined;
         }
       }
     )

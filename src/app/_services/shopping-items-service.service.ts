@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, tap, pluck } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { WebRequestService } from './web-request-service.service';
 import { List } from '../_models/List';
@@ -27,7 +27,10 @@ export class ShoppingItemsServiceService {
 
   getShoppingItems(listId) {
     return this._webService.get(`lists/${listId}/items`)
-    .pipe(catchError(this.errorHandler));
+    .pipe(
+      pluck('data'),
+      catchError(this.errorHandler)
+    );
   }
 
   createShoppingItem(item: Item, listId: string) {

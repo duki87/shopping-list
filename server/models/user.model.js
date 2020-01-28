@@ -91,18 +91,18 @@ UserSchema.statics.findByIdAndToken = function(_id, token) {
 UserSchema.statics.findByCredentials = function(email, password) {
     const User = this;
     return User.findOne({ email: email }).then((user) => {       
-        if(!user) return Promise.reject('User not found!');       
+        if(!user) return Promise.reject('USER_NOT_EXISTS');       
         return new Promise((resolve, reject) => {
             bcrypt.compare(password, user.password, (err, pass) => {
                 if(pass) {
                     resolve(user);
                 } else {
-                    reject(`Password not match`);
+                    reject(`PASSWORD_NOT_MATCH`);
                 }
             });
         })
     }).catch(err => {
-        return Promise.reject(`Request failed. Error: ${err}`);
+        return Promise.reject(err);
     });
 }
 

@@ -35,7 +35,11 @@ exports.createUser = function(req, res, next) {
             })
         })
     }).catch((err) => {
-        res.status(400).send(err);
+        if(err.code == 11000) {
+            res.status(400).send(`USER_EXISTS`);
+        } else {
+            res.status(400).send(err);
+        }      
     });
 }
 
@@ -61,5 +65,12 @@ exports.loginUser = function(req, res, next) {
     }).catch((e) => {
         res.status(400).send(e);
     });
+}
+
+exports.accessToken = function(req, res) {
+    //user is authenticated if passed verifyToken middleware
+    req.userObject.generateAccessAuthToken().then((accessToken) => {
+        res.header('x-access-token', accessToken).status(200).send({ accessToken });
+    }).catch((err) => res.status(400).send(err));
 }
 
