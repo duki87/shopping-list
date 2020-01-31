@@ -38,40 +38,48 @@ exports.getItem = async (req, res, next) => {
     }
 }
 
-exports.createItem = async (req, res, next) => {
-    try {
-        const item = new Item({
-            title: req.body.title,
-            price: req.body.price,
-            _listId: req.params.listId
-        });
-        const savedItem = await item.save();
-        return res.status(201).json({
-            success: true,
-            data: savedItem
-        });
-    } catch(error) {
-        console.log(error);
-        if(error.code === 11000) {
-            res.status(500).json({
-                error: "This item already exists."
-            });
-        } else {
-            res.status(500).json({
-                error: "Something went wrong."
-            });
+exports.createItem = (req, res, next) => {
+    List.findOne({ _id: req.params.listId, _userId: req.user_id })
+    .then((list) => {
+        if(list) {
+            // list object with the specified conditions was found; currently authenticated user can create new tasks
+            return true;
         }
-    }
+        return false;
+    }).then((canCreateNewItem) => {
+        if(canCreateNewItem) {
+            const newItem = new Item({
+                title: req.body.title,
+                price: req.body.price,
+                _listId: req.params.listId
+            });
+            newItem.save().then((savedItem) => {
+                return res.status(201).json({
+                    success: true,
+                    data: savedItem
+                });
+            }).catch((err) => {
+                res.status(404).json({ error: 'TASK_CREATE_FAIL' });
+            })
+        } else {
+            res.status(404).json({ error: 'TASK_CREATE_FAIL' });
+        }
+    }).catch((err) => {
+        res.status(500).json({error: err})
+    });
 }
 
 exports.updateItem = (req, res, next) => {
-    List.findOne({ _id: req.params.listId }).then(list => {
-        if(!list) {
-            res.status(500).json({
-                error: "Selected list doesn' t exist."
-            });
-        }   
-        Item.updateOne({ _id: req.params.itemId, _listId: req.params.listId }, {
+    List.findOne({ _id: req.params.listId, _userId: req.user_id })
+    .then((list) => {
+        if(list) {
+            // list object with the specified conditions was found; currently authenticated user can create new tasks
+            return true;
+        }
+        return false;
+    }).then((canUpdateItem) => {
+        if(canUpdateItem) {
+            Item.updateOne({ _id: req.params.itemId, _listId: req.params.listId }, {
                 $set: req.body
             }).then(updatedItem => {
                 return res.status(200).json({
@@ -84,22 +92,25 @@ exports.updateItem = (req, res, next) => {
                     error: "Something went wrong."
                 });
             });
-    }).catch(err => {
-        console.log(error);
-        res.status(500).json({
-            error: "Something went wrong."
-        });
+        } else {
+            res.status(404).json({ error: 'TASK_UPDATE_FAIL' });
+        }
+    }).catch((err) => {
+        res.status(500).json({error: err})
     });
 }
 
 exports.deleteItem = async (req, res, next) => {
-    List.findOne({ _id: req.params.listId }).then(list => {
-        if(!list) {
-            res.status(500).json({
-                error: "Selected list doesn' t exist."
-            });
-        }   
-        Item.deleteOne({ _id: req.params.itemId, _listId: req.params.listId }).then(deletedItem => {
+    List.findOne({ _id: req.params.listId, _userId: req.user_id })
+    .then((list) => {
+        if(list) {
+            // list object with the specified conditions was found; currently authenticated user can create new tasks
+            return true;
+        }
+        return false;
+    }).then((canDeleteItem) => {
+        if(canDeleteItem) {
+            Item.deleteOne({ _id: req.params.itemId, _listId: req.params.listId }).then(deletedItem => {
                 return res.status(200).json({
                     success: true,
                     data: deletedItem
@@ -110,10 +121,10 @@ exports.deleteItem = async (req, res, next) => {
                     error: "Something went wrong."
                 });
             });
-    }).catch(err => {
-        console.log(error);
-        res.status(500).json({
-            error: "Something went wrong."
-        });
+        } else {
+            res.status(404).json({ error: 'TASK_DELETE_FAIL' });
+        }
+    }).catch((err) => {
+        res.status(500).json({error: err})
     });
 }

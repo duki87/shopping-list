@@ -15,7 +15,13 @@ export class WebReqInterceptor implements HttpInterceptor {
     req = this.addAuthHeader(req);
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
-        console.log(err);
+        if(err.status === 401) {
+          //401 status means that user is not authenticated
+
+          //call logout function to refresh auth token
+          console.log('test')
+          this._authService.logout();
+        }
         return throwError(err);
       })
     )

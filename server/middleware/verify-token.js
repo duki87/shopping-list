@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 exports.verifyRefreshToken = function(req, res, next) {
     //extract refresh token from the request header
@@ -32,4 +33,23 @@ exports.verifyRefreshToken = function(req, res, next) {
             return Promise.reject('REFRESH_TOKEN_EXPIRED');
         }
     }).catch((err) => res.status(401).send(err));
+}
+
+exports.verifyAccessToken = function(req, res, next) { 
+    let token = req.header('x-access-token');
+    if(token) {
+        //verify token
+        jwt.verify(token, process.env.SECRET_JWT_KEY, (err, decoded) => {
+            if(err) {
+                //error or invalid token => auth failed
+                res.status(401).send(err);
+            } else {
+                //valid token
+                req.user_id = decoded._id;
+                next();
+            }
+        });
+    } else {
+        res.status(401).send('AUTH_FAILED');
+    }
 }
