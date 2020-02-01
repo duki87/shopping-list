@@ -19,16 +19,15 @@
                 <div class="shopping-item" *ngFor="let item of items" (click)="completeItem(item)" [ngClass]="{ 'completed': item.completed }">
                     <p>{{ item.title }}</p>
                 </div>
-    
-                <button class="circle-add-button button is-primary" routerLink="./new-shopping-item">
-                    <img src="../../../assets/img/plus.svg" alt="">
-                </button>
             </div>
             <div *ngIf="!tasks">
                 <h3 class="empty-state">
                     This shopping list is empty. Click + button to add a new item.
                 </h3>
             </div>
+            <button class="circle-add-button button is-primary" routerLink="./new-shopping-item">
+                <img src="../../../assets/img/plus.svg" alt="">
+            </button>
         </div>
     </div>
 </div>

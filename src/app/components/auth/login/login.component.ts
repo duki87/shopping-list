@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
+          this._router.navigate(['/shopping-lists']);
         },
         err => {
           console.log(err.error);

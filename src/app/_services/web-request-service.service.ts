@@ -32,6 +32,6 @@ export class WebRequestService {
     return this._http.post(`${this.ROOT_URL}/users/login`, userData, {
         observe: 'response'
       });
-      //{ observe: 'response' is added in order to return get full response }
+      //{ observe: 'response' is added in order to return full response }
   }
 }

@@ -22,7 +22,7 @@ export class NewListComponent implements OnInit {
     this._shoppingItemsService.createList(list)
       .subscribe((res: any) => {
         console.log(res)
-        this._router.navigate(['/shopping-lists/'+res._id]);
+        this._router.navigate(['/shopping-lists/'+res.data._id]);
       })
   }
 

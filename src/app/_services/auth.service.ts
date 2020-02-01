@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  constructor(private _webService: WebRequestService, private _router: Router) { }
+  constructor(private _http: HttpClient,private _webService: WebRequestService, private _router: Router) { }
 
   login(userData: object) {
     return this._webService.login(userData)
@@ -42,6 +42,10 @@ export class AuthService {
     localStorage.removeItem('x-refresh-token');
   }
 
+  getUserId() {
+    return localStorage.getItem('_id');
+  }
+
   getRefreshToken() {
     return localStorage.getItem('x-refresh-token');
   }
@@ -52,6 +56,18 @@ export class AuthService {
 
   setAccessToken(accessToken: string) {
     return localStorage.setItem('x-access-token', accessToken);
+  }
+
+  getNewAccessToken() {
+    return this._http.get(`${this._webService.ROOT_URL}/users/me/access-token`, {
+      headers: {
+        'x-refresh-token': this.getRefreshToken(),
+        '_id': this.getUserId()
+      },
+      observe: 'response'
+    }).pipe(
+      tap((res: HttpResponse<any>) => { this.setAccessToken(res.headers.get('x-access-token')) })
+    )
   }
 
   errorHandler(error: HttpErrorResponse) {
