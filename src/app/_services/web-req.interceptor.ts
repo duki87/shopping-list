@@ -11,21 +11,24 @@ export class WebReqInterceptor implements HttpInterceptor {
 
   constructor(private _authService: AuthService) { }
 
-  refreshingAccessToken: boolean = false;
+  refreshingAccessToken: boolean;
   accessTokenRefreshed: Subject<any> = new Subject();
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    req = this.addAuthHeader(req);
-    return next.handle(req).pipe(
+  intercept(requst: HttpRequest<any>, next: HttpHandler): Observable<any> {
+    //add headers to request
+    requst = this.addAuthHeader(requst);
+    //call next() and try to authenticate
+    return next.handle(requst).pipe(
       catchError((err: HttpErrorResponse) => {
+        //if unauthorized, try to refresh access token
         if(err.status === 401) {
           //401 status means that user is not authenticated
           //call logout function to refresh access token
           return this.refreshAccessToken()
             .pipe(
               switchMap(() => {
-                req = this.addAuthHeader(req);
-                return next.handle(req);
+                requst = this.addAuthHeader(requst);
+                return next.handle(requst);
               }),
               catchError((err: any) => {
                 this._authService.logout();
@@ -38,22 +41,22 @@ export class WebReqInterceptor implements HttpInterceptor {
     )
   }
 
-  addAuthHeader(req: HttpRequest<any>) {
+  addAuthHeader(requst: HttpRequest<any>) {
     //get access token
     const accessToken = this._authService.getAccessToken();
     if(accessToken) {
       //append access token to the request header
-      return req.clone({
+      return requst.clone({
         setHeaders: {
           'x-access-token': accessToken
         }
       });
     }
-    return req;
+    return requst;
   }
 
   refreshAccessToken() {
-    if(this.refreshAccessToken) {
+    if(this.refreshingAccessToken) {
       return new Observable(observer => {
         this.accessTokenRefreshed.subscribe(() => {
           //this code runs if access token is refreshed

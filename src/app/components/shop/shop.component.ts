@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingItemsServiceService } from 'src/app/_services/shopping-items-service.service';
 import { List } from 'src/app/_models/List';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Item } from 'src/app/_models/Item';
 
 @Component({
@@ -15,7 +15,7 @@ export class ShopComponent implements OnInit {
   items: Item[];
   listId: string;
 
-  constructor(private _shoppingItemsService: ShoppingItemsServiceService, private _activatedRoute: ActivatedRoute) { }
+  constructor(private _shoppingItemsService: ShoppingItemsServiceService, private _router: Router, private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this._activatedRoute.params.subscribe(
@@ -49,11 +49,26 @@ export class ShopComponent implements OnInit {
   completeItem(item: Item) {
     item.completed == true ? item.completed = false : item.completed = true;
     this._shoppingItemsService.updateShoppingItem(item, this.listId)
-    .subscribe(
-      item => {
-        console.log(item)
-      }
-    )
+      .subscribe(
+        item => {
+          console.log(item)
+        }
+      )
   }
+
+  deleteList() {
+    return this._shoppingItemsService.deleteList(this.listId)
+      .subscribe(
+        res => {
+          this.listId = undefined;
+          this._router.navigate(['/shopping-lists']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+  }
+
+  
 
 }

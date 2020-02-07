@@ -25,12 +25,22 @@ export class ShoppingItemsServiceService {
     .pipe(catchError(this.errorHandler));
   }
 
+  getList(listId: string) {
+    return this._webService.get(`lists/${listId}`)
+    .pipe(catchError(this.errorHandler));
+  }
+
   getShoppingItems(listId) {
     return this._webService.get(`lists/${listId}/items`)
     .pipe(
       pluck('data'),
       catchError(this.errorHandler)
     );
+  }
+
+  updateShoppingList(list: List, listId: string) {
+    return this._webService.patch(`lists/${listId}`, list)
+      .pipe(catchError(this.errorHandler));
   }
 
   createShoppingItem(item: Item, listId: string) {
@@ -40,6 +50,11 @@ export class ShoppingItemsServiceService {
 
   updateShoppingItem(item: Item, listId: string) {
     return this._webService.patch(`lists/${listId}/items/${item._id}`, item)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  deleteList(listId: string) {
+    return this._webService.delete(`lists/${listId}`)
       .pipe(catchError(this.errorHandler));
   }
   

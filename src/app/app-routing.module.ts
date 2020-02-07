@@ -6,10 +6,12 @@ import { NewShoppingItemComponent } from './components/new-shopping-item/new-sho
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { EditListComponent } from './components/edit-list/edit-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'shopping-lists', pathMatch: 'full' },
   { path: 'new-list', component: NewListComponent }, 
+  { path: 'edit-list/:listId', component: EditListComponent }, 
   { path: 'login', component: LoginComponent }, 
   { path: 'register', component: RegisterComponent },
   { path: 'shopping-lists', component: ShopComponent },

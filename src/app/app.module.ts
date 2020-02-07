@@ -15,6 +15,7 @@ import { WebReqInterceptor } from './_services/web-req.interceptor';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthService } from './_services/auth.service';
+import { EditListComponent } from './components/edit-list/edit-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthService } from './_services/auth.service';
     NewShoppingItemComponent,
     LoginComponent,
     RegisterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EditListComponent
   ],
   imports: [
     BrowserModule,

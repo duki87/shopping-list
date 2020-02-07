@@ -10,9 +10,10 @@
                 </a>
             </div>
             <button class="button is-primary has-text-white" routerLink="/new-list">+ Add New List</button>
+            <button class="button is-warning has-text-white" routerLink="">Logout</button>
         </div>
         <div class="items-list-container has-background-light">
-            <div *ngIf="items">
+            <div *ngIf="listId">
                 <div class="top-bar">
                     <h1 class="title has-text-primary">
                         Shopping Items
@@ -28,25 +29,44 @@
                         </div>
                         <div class="dropdown-menu" id="dropdown-menu4" role="menu">
                             <div class="dropdown-content">
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" [routerLink]="['/edit-list', listId]">
                                     Edit
                                 </a>
-                                <a class="dropdown-item has-text-danger" href="">
+                                <a class="dropdown-item has-text-danger" (click)="deleteList()">
                                     Delete
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-              
+                
                 <div class="shopping-item" *ngFor="let item of items" (click)="completeItem(item)" [ngClass]="{ 'completed': item.completed }">
-                    <p>{{ item.title }}</p>
+                    <div class="item-text">
+                        <p>{{ item.title }}</p>
+                    </div>
+                    <div class="item-buttons">
+                        <button class="button is-danger">
+                            <div class="icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </button>
+                        <button class="button is-info">
+                            <div class="icon">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                        </button>
+                    </div>                  
+                </div>
+    
+                <div *ngIf="!items">
+                    <h3 class="empty-state">
+                        This shopping list is empty. Click + button to add a new item.
+                    </h3>
                 </div>
             </div>
-
-            <div *ngIf="!items">
+            <div *ngIf="!listId"> 
                 <h3 class="empty-state">
-                    This shopping list is empty. Click + button to add a new item.
+                    Please select shopping list from the left menu.
                 </h3>
             </div>
             <button class="circle-add-button button is-primary" routerLink="./new-shopping-item">
