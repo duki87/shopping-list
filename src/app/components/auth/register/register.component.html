@@ -1,0 +1,44 @@
+<div class="content-center">
+    <div class="modal-box">
+        <h1 class="title has-text-primary">Register New User</h1>
+        <form (ngSubmit)="register(name.value, email.value, password.value)">
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                  <input #name class="input" type="text" placeholder="User Name" required>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                  <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                  </span>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                <input #email class="input" type="email" placeholder="Email" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left">
+                <input #password class="input" type="password" placeholder="Password" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+                </p>
+            </div>
+            <div class="field is-pulled-right">
+                <p class="control">
+                <button type="submit" class="button is-success has-text-white">
+                    Register
+                </button>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

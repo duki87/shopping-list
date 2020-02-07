@@ -34,4 +34,11 @@ export class WebRequestService {
       });
       //{ observe: 'response' is added in order to return full response }
   }
+
+  register(userData: object) {
+    return this._http.post(`${this.ROOT_URL}/users`, userData, {
+        observe: 'response'
+      });
+      //{ observe: 'response' is added in order to return full response }
+  }
 }

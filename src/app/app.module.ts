@@ -12,6 +12,9 @@ import { NewShoppingItemComponent } from './components/new-shopping-item/new-sho
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/auth/login/login.component';
 import { WebReqInterceptor } from './_services/web-req.interceptor';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthService } from './_services/auth.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { WebReqInterceptor } from './_services/web-req.interceptor';
     ShopComponent,
     NewListComponent,
     NewShoppingItemComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +35,7 @@ import { WebReqInterceptor } from './_services/web-req.interceptor';
   providers: [
     ShoppingItemsServiceService,
     WebRequestService,
+    AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

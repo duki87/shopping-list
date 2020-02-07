@@ -146,7 +146,7 @@ let saveSessionToDB = (user, refreshToken) => {
 }
 
 let generateRefreshAuthTokenExpiryTime = function() {
-    let daysUntilExpire = '10';
+    let daysUntilExpire = 10;
     let secondsUntilExpire = ((daysUntilExpire * 24) * 60) * 60;
     //let secondsUntilExpire = 15;
     return ((Date.now() / 1000) + secondsUntilExpire);

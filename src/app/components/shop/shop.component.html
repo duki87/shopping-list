@@ -11,16 +11,40 @@
             </div>
             <button class="button is-primary has-text-white" routerLink="/new-list">+ Add New List</button>
         </div>
-        <div class="shop-list has-background-light">
-            <h1 class="title has-text-primary">
-                Shopping Items
-            </h1>
+        <div class="items-list-container has-background-light">
             <div *ngIf="items">
+                <div class="top-bar">
+                    <h1 class="title has-text-primary">
+                        Shopping Items
+                    </h1>
+
+                    <div class="dropdown is-hoverable is-right">
+                        <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true">
+                            <span class="icon is-small">
+                            <i class="fas fa-cog" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                            <div class="dropdown-content">
+                                <a class="dropdown-item" href="">
+                                    Edit
+                                </a>
+                                <a class="dropdown-item has-text-danger" href="">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
                 <div class="shopping-item" *ngFor="let item of items" (click)="completeItem(item)" [ngClass]="{ 'completed': item.completed }">
                     <p>{{ item.title }}</p>
                 </div>
             </div>
-            <div *ngIf="!tasks">
+
+            <div *ngIf="!items">
                 <h3 class="empty-state">
                     This shopping list is empty. Click + button to add a new item.
                 </h3>
