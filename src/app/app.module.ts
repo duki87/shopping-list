@@ -16,6 +16,8 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthService } from './_services/auth.service';
 import { EditListComponent } from './components/edit-list/edit-list.component';
+import { EditShoppingItemComponent } from './components/edit-shopping-item/edit-shopping-item.component';
+import { CanAccessGuard } from './_guards/can-access.guard';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { EditListComponent } from './components/edit-list/edit-list.component';
     LoginComponent,
     RegisterComponent,
     NotFoundComponent,
-    EditListComponent
+    EditListComponent,
+    EditShoppingItemComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { EditListComponent } from './components/edit-list/edit-list.component';
     ShoppingItemsServiceService,
     WebRequestService,
     AuthService,
+    CanAccessGuard,
     { provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

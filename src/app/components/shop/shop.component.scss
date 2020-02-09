@@ -103,7 +103,6 @@
     padding: 15px 20px;
     border-radius: 5px;
     margin-top: 10px;
-
     align-items: center;
      
     &:not(.complete) {
@@ -117,7 +116,7 @@
         &:hover {
             box-shadow: 0 0 0 5px #eeeeee;
 
-            .task-buttons {
+            .shopping-item-buttons {
                 opacity: 1;
                 transform: scale(1);
             }
@@ -125,7 +124,6 @@
     }
 
     &.completed {
-        text-decoration: line-through;
         opacity: 0.8;
     }
 
@@ -133,7 +131,6 @@
         text-decoration: line-through;
         opacity: 0.8;
     }
-
 
     .shopping-item-text {
         display: flex;

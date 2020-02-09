@@ -9,8 +9,8 @@
                     <p>{{ list.title }}</p>
                 </a>
             </div>
-            <button class="button is-primary has-text-white" routerLink="/new-list">+ Add New List</button>
-            <button class="button is-warning has-text-white" routerLink="">Logout</button>
+            <button class="button is-primary has-text-white" routerLink="/new-list"><i class="fas fa-plus"></i> &nbsp; Add New List</button>
+            <button class="button is-warning has-text-white" routerLink="" (click)="logout()" style="margin-top:10px"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</button>
         </div>
         <div class="items-list-container has-background-light">
             <div *ngIf="listId">
@@ -41,16 +41,21 @@
                 </div>
                 
                 <div class="shopping-item" *ngFor="let item of items" (click)="completeItem(item)" [ngClass]="{ 'completed': item.completed }">
-                    <div class="item-text">
-                        <p>{{ item.title }}</p>
+                    <div class="shopping-item-text">
+                        <p>
+                            <strong>Item: </strong>
+                            {{ item.title }} 
+                            <strong>Price: </strong>
+                            {{ item.price }} din.
+                        </p>
                     </div>
-                    <div class="item-buttons">
-                        <button class="button is-danger">
+                    <div class="shopping-item-buttons">
+                        <button class="button is-danger" (click)="deleteShoppingItem(item)" style="margin-right:10px">
                             <div class="icon">
                                 <i class="fas fa-trash"></i>
                             </div>
                         </button>
-                        <button class="button is-info">
+                        <button class="button is-info" [routerLink]="['/shopping-lists', listId, 'edit-shopping-item', item._id]">
                             <div class="icon">
                                 <i class="fas fa-edit"></i>
                             </div>

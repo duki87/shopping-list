@@ -82,6 +82,10 @@ export class AuthService {
     )
   }
 
+  verifyToken() {
+    return this._http.get(`${this._webService.ROOT_URL}/users/verify-token`, { observe: 'response' });
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }

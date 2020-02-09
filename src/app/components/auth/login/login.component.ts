@@ -21,8 +21,9 @@ export class LoginComponent implements OnInit {
     this._authService.login({email: email, password: password})
       .subscribe(
         res => {
-          console.log(res);
-          this._router.navigate(['/shopping-lists']);
+          if(res.status === 200) {
+            this._router.navigate(['/shopping-lists']);
+          }         
         },
         err => {
           console.log(err.error);

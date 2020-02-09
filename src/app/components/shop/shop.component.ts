@@ -3,6 +3,7 @@ import { ShoppingItemsServiceService } from 'src/app/_services/shopping-items-se
 import { List } from 'src/app/_models/List';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Item } from 'src/app/_models/Item';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-shop',
@@ -15,7 +16,7 @@ export class ShopComponent implements OnInit {
   items: Item[];
   listId: string;
 
-  constructor(private _shoppingItemsService: ShoppingItemsServiceService, private _router: Router, private _activatedRoute: ActivatedRoute) { }
+  constructor(private _shoppingItemsService: ShoppingItemsServiceService, private _router: Router, private _activatedRoute: ActivatedRoute, private _authService: AuthService) { }
 
   ngOnInit() {
     this._activatedRoute.params.subscribe(
@@ -48,7 +49,7 @@ export class ShopComponent implements OnInit {
 
   completeItem(item: Item) {
     item.completed == true ? item.completed = false : item.completed = true;
-    this._shoppingItemsService.updateShoppingItem(item, this.listId)
+    this._shoppingItemsService.completeItem(item, this.listId)
       .subscribe(
         item => {
           console.log(item)
@@ -69,6 +70,20 @@ export class ShopComponent implements OnInit {
       );
   }
 
-  
+  deleteShoppingItem(item: Item) {
+    return this._shoppingItemsService.deleteItem(item._id, this.listId)
+      .subscribe(
+        res => {
+          this.items.splice(this.items.indexOf(item), 1);         
+        },
+        err => {
+          console.log(err);
+        }
+      );
+  }
+
+  logout() {
+    return this._authService.logout();
+  }
 
 }

@@ -1,0 +1,14 @@
+<div class="content-center">
+    <div class="modal-box">
+        <h1 class="title">
+            Edit Shopping Item
+        </h1>
+
+        <input #itemTitleInput class="input has-background-light is-medium" [(ngModel)]="item.title" type="text" placeholder="Enter shopping item title...">
+        <input #itemPriceInput class="input has-background-light is-medium" [(ngModel)]="item.price" type="number" min="0" style="margin-top: 10px;" placeholder="Enter shopping item price...">
+        <br><br>
+        <div class="buttons is-right">
+          <button class="button is-medium" routerLink="/">Cancel</button>
+          <button class="button is-primary has-text-white is-medium" (click)="updateShoppingItem()">Save</button>
+    </div>
+</div>
